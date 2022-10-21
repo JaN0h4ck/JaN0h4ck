@@ -1,6 +1,6 @@
 - 👋 Hi, I’m @JaN0h4ck
 - 👀 I’m interested in Gaming and Movies
-- 🌱 I’m currently learning C++ and Blener
+- 🌱 I’m currently learning C++ and Blender
 - 💞️ I’m looking to collaborate on ...
 - 🌐 I'm cool with any pronouns
 
