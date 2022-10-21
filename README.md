@@ -1,7 +1,7 @@
 - 👋 Hi, I’m @JaN0h4ck
 - 👀 I’m interested in Gaming and Movies
-- 🌱 I’m currently learning C++ and Blender
-- 💞️ I’m looking to collaborate on ...
+- 🌱 I’m currently learning C++, Blender and Unity
+- 💞️ I’m working on our game collab @ uni: Repiblic Bread
 - 🌐 I'm cool with any pronouns
 
 <!---
