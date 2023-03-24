@@ -1,6 +1,6 @@
 - 👋 Hi, I’m @JaN0h4ck
 - 👀 I’m interested in Gaming and Movies
-- 🌱 I’m currently learning C++, Blender and Unity
+- 🌱 I’m currently learning C++, C#, Blender, Unity and Unreal Engine
 - 💞️ I’m working on our game collab @ Uni: Republic Bread
 - 🌐 I'm cool with any pronouns
 
