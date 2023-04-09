@@ -1,17 +1,45 @@
 #include <iostream>
 #include "Graph.h"
 
+void removeDoubles(std::vector<Vertex*>& listWithDoubles) {
+	for (size_t i = 0; i < listWithDoubles.size(); i++) {
+		for (size_t j = 0; j < listWithDoubles.size(); j++) {
+			if (i != j && listWithDoubles[i] == listWithDoubles[j]) {
+				listWithDoubles.erase(listWithDoubles.begin() + j);
+			}
+		}	
+	}
+}
 
-void calculateAndPrintPath(std::vector<Vertex*> pathToVerify) {
+void extractPathfromVertices(std::vector<Vertex*> pathToVerify, bool graphIsComplete = 0) {
 	std::vector<Vertex*> verticesVerified;
 
-	for (size_t i = 0; i < pathToVerify.size(); i++) {
-		bool found = false;
-		for (size_t j = 0; j < verticesVerified.size(); j++)
-			if (pathToVerify[i] == verticesVerified[j])
-				found = true;
-		if (!found) 
-			verticesVerified.push_back(pathToVerify[i]);
+	if (graphIsComplete) {
+		removeDoubles(pathToVerify);
+		verticesVerified = pathToVerify;
+	}
+	else {
+		removeDoubles(pathToVerify);
+		verticesVerified.push_back(pathToVerify[0]);
+		for (size_t i = 1; i < pathToVerify.size(); i++) {
+			std::vector<Vertex*> neighbours = pathToVerify[i]->getNeighbours();
+			bool foundEdge = 0;
+			for (size_t j = 0; j < neighbours.size(); j++) {
+				if (pathToVerify[i - 1] == neighbours[j]) {
+					foundEdge = 1;
+					break;
+				}
+			}
+			if (foundEdge) {
+				verticesVerified.push_back(pathToVerify[i]);
+			}
+			else
+				break;
+		}
+		if (verticesVerified.size() <= 1) {
+			std::cout << "\nNo Path found!" << std::endl;
+			return;
+		}
 	}
 
 	// print path
@@ -22,16 +50,17 @@ void calculateAndPrintPath(std::vector<Vertex*> pathToVerify) {
 	std::cout << std::endl;
 }
 
+
 void main() {
 #pragma region Initialisation
-	Vertex a("v1");
-	Vertex b("v2");
-	Vertex c("v3");
-	Vertex d("v4");
-	Vertex e("v5");
-	Vertex f("v6");
-	Vertex g("v7");
-	Vertex h("v8");
+	Vertex a("a");
+	Vertex b("b");
+	Vertex c("c");
+	Vertex d("d");
+	Vertex e("e");
+	Vertex f("f");
+	Vertex g("g");
+	Vertex h("h");
 
 	std::vector<Vertex*> vertices = {&a, &b, &c, &d, &e, &f, &g, &h};
 
@@ -68,9 +97,11 @@ void main() {
 	{
 		std::cout << edges[i]->getName() << std::endl;
 	}
+	
+	std::cout << std::endl;
 #pragma endregion
 
 	std::vector<Vertex*> path = { &a, &b, &c, &b, &c, &g, &f, &e, &d, &g, &h, &a, &b, &d };
 
-	calculateAndPrintPath(path);
+	extractPathfromVertices(path, true);
 }
