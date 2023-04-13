@@ -1,44 +1,58 @@
 #include <iostream>
 #include "Graph.h"
 
+/// <summary>
+/// Searches for double Vertices in the list and removes every Vertex between them (plus one of the doubles)
+/// </summary>
+/// <param name="listWithDoubles">The list where double vertices are supposed to be removed</param>
 void removeDoubles(std::vector<Vertex*>& listWithDoubles) {
 	for (size_t i = 0; i < listWithDoubles.size(); i++) {
 		for (size_t j = 0; j < listWithDoubles.size(); j++) {
 			if (i != j && listWithDoubles[i] == listWithDoubles[j]) {
-				listWithDoubles.erase(listWithDoubles.begin() + j);
+				listWithDoubles.erase(listWithDoubles.begin() + i, listWithDoubles.begin() + j);
 			}
 		}	
 	}
 }
 
-void extractPathfromVertices(std::vector<Vertex*> pathToVerify, bool graphIsComplete = 0) {
+/// <summary>
+/// Extracts a valid path from a given List of vertices
+/// </summary>
+/// <param name="pathToVerify">List vertices that is supposed to be verified</param>
+/// <param name="graphIsComplete"> Set to "true" if the graph is complete </param>
+/// <returns>A List with a valid path (or a empty List)</returns>
+std::vector<Vertex*> extractPathfromVertices(std::vector<Vertex*> pathToVerify, bool graphIsComplete = 0) {
 	std::vector<Vertex*> verticesVerified;
 
 	if (graphIsComplete) {
 		removeDoubles(pathToVerify);
 		verticesVerified = pathToVerify;
-	}
-	else {
+	} else {
 		removeDoubles(pathToVerify);
-		verticesVerified.push_back(pathToVerify[0]);
 		for (size_t i = 1; i < pathToVerify.size(); i++) {
-			std::vector<Vertex*> neighbours = pathToVerify[i]->getNeighbours();
+			// Needs to be done this way to prevent Memory exception
+			std::vector<Vertex*> neighbours = pathToVerify[i - 1]->getNeighbours();
 			bool foundEdge = 0;
 			for (size_t j = 0; j < neighbours.size(); j++) {
-				if (pathToVerify[i - 1] == neighbours[j]) {
-					foundEdge = 1;
+				if (pathToVerify[i] == neighbours[j]) {
+					foundEdge = true;
 					break;
 				}
 			}
 			if (foundEdge) {
 				verticesVerified.push_back(pathToVerify[i]);
+				// First Element won't be in the list, if this isn't done
+				if (i == 1) {
+					verticesVerified.insert(verticesVerified.begin(), pathToVerify[i - 1]);
+				}
+			} else {
+				pathToVerify.erase(pathToVerify.begin() + i);
+				i--;
 			}
-			else
-				break;
 		}
 		if (verticesVerified.size() <= 1) {
 			std::cout << "\nNo Path found!" << std::endl;
-			return;
+			return verticesVerified;
 		}
 	}
 
@@ -48,10 +62,11 @@ void extractPathfromVertices(std::vector<Vertex*> pathToVerify, bool graphIsComp
 		std::cout << verticesVerified[i]->getName() << " ";
 	}
 	std::cout << std::endl;
+	return verticesVerified;
 }
 
 
-void main() {
+int main() {
 #pragma region Initialisation
 	Vertex a("a");
 	Vertex b("b");
@@ -104,4 +119,6 @@ void main() {
 	std::vector<Vertex*> path = { &a, &b, &c, &b, &c, &g, &f, &e, &d, &g, &h, &a, &b, &d };
 
 	extractPathfromVertices(path, true);
+
+	return 0;
 }
