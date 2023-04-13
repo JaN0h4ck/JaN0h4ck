@@ -1,11 +1,13 @@
 #include <iostream>
 #include "Graph.h"
 
+using std::vector, std::cout, std::endl;
+
 /// <summary>
 /// Searches for double Vertices in the list and removes every Vertex between them (plus one of the doubles)
 /// </summary>
 /// <param name="listWithDoubles">The list where double vertices are supposed to be removed</param>
-void removeDoubles(std::vector<Vertex*>& listWithDoubles) {
+void removeDoubles(vector<Vertex*>& listWithDoubles) {
 	for (size_t i = 0; i < listWithDoubles.size(); i++) {
 		for (size_t j = 0; j < listWithDoubles.size(); j++) {
 			if (i != j && listWithDoubles[i] == listWithDoubles[j]) {
@@ -21,8 +23,8 @@ void removeDoubles(std::vector<Vertex*>& listWithDoubles) {
 /// <param name="pathToVerify">List vertices that is supposed to be verified</param>
 /// <param name="graphIsComplete"> Set to "true" if the graph is complete </param>
 /// <returns>A List with a valid path (or a empty List)</returns>
-std::vector<Vertex*> extractPathfromVertices(std::vector<Vertex*> pathToVerify, bool graphIsComplete = 0) {
-	std::vector<Vertex*> verticesVerified;
+vector<Vertex*> extractPathfromVertices(vector<Vertex*> pathToVerify, bool graphIsComplete = 0) {
+	vector<Vertex*> verticesVerified;
 
 	if (graphIsComplete) {
 		removeDoubles(pathToVerify);
@@ -31,7 +33,7 @@ std::vector<Vertex*> extractPathfromVertices(std::vector<Vertex*> pathToVerify, 
 		removeDoubles(pathToVerify);
 		for (size_t i = 1; i < pathToVerify.size(); i++) {
 			// Needs to be done this way to prevent Memory exception
-			std::vector<Vertex*> neighbours = pathToVerify[i - 1]->getNeighbours();
+			vector<Vertex*> neighbours = pathToVerify[i - 1]->getNeighbours();
 			bool foundEdge = 0;
 			for (size_t j = 0; j < neighbours.size(); j++) {
 				if (pathToVerify[i] == neighbours[j]) {
@@ -57,11 +59,11 @@ std::vector<Vertex*> extractPathfromVertices(std::vector<Vertex*> pathToVerify, 
 	}
 
 	// print path
-	std::cout << "Path: ";
+	cout << "Path: ";
 	for (size_t i = 0; i < verticesVerified.size(); i++) {
-		std::cout << verticesVerified[i]->getName() << " ";
+		cout << verticesVerified[i]->getName() << " ";
 	}
-	std::cout << std::endl;
+	cout << endl;
 	return verticesVerified;
 }
 
@@ -77,7 +79,7 @@ int main() {
 	Vertex g("g");
 	Vertex h("h");
 
-	std::vector<Vertex*> vertices = {&a, &b, &c, &d, &e, &f, &g, &h};
+	vector<Vertex*> vertices = {&a, &b, &c, &d, &e, &f, &g, &h};
 
 	// add neighbours
 	for (size_t i = 0; i < vertices.size(); i++)
@@ -93,30 +95,30 @@ int main() {
 
 	for (size_t i = 0; i < vertices.size(); i++)
 	{
-		std::cout << vertices[i]->getName() << " has neighbours: ";
-		std::vector<Vertex*> neighbours = vertices[i]->getNeighbours();
+		cout << vertices[i]->getName() << " has neighbours: ";
+		vector<Vertex*> neighbours = vertices[i]->getNeighbours();
 		for (size_t j = 0; j < neighbours.size(); j++)
 		{
-			std::cout << neighbours[j]->getName() << " ";
+			cout << neighbours[j]->getName() << " ";
 		}
-		std::cout << std::endl;
+		cout << endl;
 	}
 
 	Graph graph(vertices);
 
-	std::vector<Edge*> edges = graph.getEdges();
+	vector<Edge*> edges = graph.getEdges();
 
-	std::cout << "\nEdges: " << std::endl;
+	cout << "\nEdges: " << endl;
 
 	for (size_t i = 0; i < edges.size(); i++)
 	{
-		std::cout << edges[i]->getName() << std::endl;
+		cout << edges[i]->getName() << endl;
 	}
 	
-	std::cout << std::endl;
+	cout << endl;
 #pragma endregion
 
-	std::vector<Vertex*> path = { &a, &b, &c, &b, &c, &g, &f, &e, &d, &g, &h, &a, &b, &d };
+	vector<Vertex*> path = { &a, &b, &c, &b, &c, &g, &f, &e, &d, &g, &h, &a, &b, &d };
 
 	extractPathfromVertices(path, true);
 
