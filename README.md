@@ -1,7 +1,7 @@
 - 👋 Hi, I’m @JaN0h4ck
 - 🚲 I’m interested in Bicycles, Gaming and Movies
 - 🔥 Godot Ultra
-- 🤓 Currently jobbing at [Cloudwerk](https://github.com/Cloudwerk) doing Frontend Web Development with TS and React
+- 🤓 Currently jobbing at [The Serious Business Company](https://www.linkedin.com/company/theseriousbusinesscompany) doing Unity Programming
 - 🌐 I'm cool with any pronouns
 
 <!---
